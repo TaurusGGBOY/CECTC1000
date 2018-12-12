@@ -73,4 +73,8 @@ public class UserDAL {
 				"SELECT record FROM qqrecord WHERE " + "(sourid='" + user.id + "' AND destid = '" + Client.curruser.id
 						+ "') OR " + "(sourid='" + Client.curruser.id + "' AND destid = '" + user.id + "')");
 	}
+
+	static public ResultSet returnGroup(String id) {
+		return new MySQLHelper().query("SELECT * FROM qqgroup WHERE id='" + id + "'");
+	}
 }

@@ -21,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import ggb.s8.bll.UserBLL;
 import ggb.s8.dal.MySQLHelper;
 import ggb.s8.model.Client;
+import ggb.s8.model.QQgroup;
 import ggb.s8.model.User;
 
 public class MainChat extends JFrame {
@@ -142,9 +143,14 @@ public class MainChat extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// panel_1.add(new OneChat("h4", "sadsad", "asdasd"));
 				User user = new User();
-				if (!Client.currchat.id.equals(user.id)) {
-					new UserInfo(Client.currchat).setVisible(true);
-					setVisible(false);
+				if (!Client.currchat.equals(user.id)) {
+					if (Client.currchat.substring(0, 1).equals("u")) {
+						new UserInfo(UserBLL.returnuser(Client.currchat)).setVisible(true);
+						setVisible(false);
+					} else if (Client.currchat.substring(0, 1).equals("Q")) {
+						new MultiInfo(UserBLL.returnGroup(Client.currchat)).setVisible(true);
+						setVisible(false);
+					}
 				}
 			}
 		});
@@ -182,25 +188,44 @@ public class MainChat extends JFrame {
 
 		panel_3.add(new MainTip());
 
-		List<String> result = Arrays.asList(Client.curruser.friend.split(","));
-		User user = new User();
+		List<String> result = Arrays.asList((Client.curruser.friend + ',' + Client.curruser.qqgroup).split(","));
+
+		String headstring = "";
+		String namestring = "";
+		String idstring = "";
 		for (String re : result) {
-			user.clone(UserBLL.returnuser(re));
+			User user;
+			QQgroup qQgroup;
+			if (re.substring(0, 1).equals("u")) {
+				user = UserBLL.returnuser(re);
+				headstring = user.head;
+				namestring = user.name;
+				idstring = user.id;
+			} else if (re.substring(0, 1).equals("Q")) {
+				qQgroup = UserBLL.returnGroup(re);
+				headstring = qQgroup.head;
+				namestring = qQgroup.name;
+				idstring = qQgroup.id;
+			}
+
 			JButton onechat = new JButton();
 			onechat.setOpaque(true);
 			onechat.setBackground(new Color(250, 250, 250));
 
-			ImageIcon image1 = new ImageIcon(OneChat.class.getResource("/ggb/s8/ui/" + user.head + ".png"));
+			ImageIcon image1 = new ImageIcon(OneChat.class.getResource("/ggb/s8/ui/" + headstring + ".png"));
 			image1.setImage(image1.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
 			onechat.setIcon(image1);
 
-			onechat.setText(user.name + "                          " + user.id);
+			onechat.setText(namestring + "                          " + idstring);
 			onechat.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String str[] = onechat.getText().split("                          ");
 					panel_2.removeAll();
-					Client.currchat = UserBLL.returnuser(str[1]);
-					panel_2.add(new SingleChat(UserBLL.returnuser(str[1])));
+					Client.currchat = str[1];
+					if (re.substring(0, 1).equals("u"))
+						panel_2.add(new SingleChat(UserBLL.returnuser(str[1])));
+					else if (re.substring(0, 1).equals("Q"))
+						panel_2.add(new MultiChat(UserBLL.returnGroup(str[1])));
 					panel_2.revalidate();
 					panel_2.updateUI();
 				}

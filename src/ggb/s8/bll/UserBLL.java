@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import ggb.s8.dal.MySQLHelper;
 import ggb.s8.dal.UserDAL;
+import ggb.s8.model.QQgroup;
 import ggb.s8.model.User;
 
 public class UserBLL {
@@ -82,6 +83,7 @@ public class UserBLL {
 					user.lastlogin = rs.getDate("lastlogin");
 					user.lastlogout = rs.getDate("lastlogout");
 					user.sign = rs.getString("sign");
+					user.qqgroup = rs.getString("qqgroup");
 				}
 			}
 		} catch (Exception e) {
@@ -122,8 +124,30 @@ public class UserBLL {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		System.out.println("查询到的聊天记录为" + string);
 		new MySQLHelper().close();
 		return string;
+	}
+
+	static public QQgroup returnGroup(String id) {
+		QQgroup user = new QQgroup();
+		try {
+			ResultSet rs = UserDAL.returnGroup(id);
+			if (rs.next()) {
+				if (rs.getInt("deleted") != 1) {
+					user.id = rs.getString("id");
+					user.name = rs.getString("name");
+					user.people = rs.getString("people");
+					user.head = rs.getString("head");
+					user.buildtime = rs.getDate("buildtime");
+					user.record = rs.getString("record");
+					user.introduce = rs.getString("introduce");
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		new MySQLHelper().close();
+		return user;
 	}
 }

@@ -30,6 +30,7 @@ public class User {
 	public Date lastlogin;
 	public Date lastlogout;
 	public String sign;
+	public String qqgroup;
 
 	/**
 	 * Default constructor
@@ -61,10 +62,11 @@ public class User {
 		}
 
 		sign = "";
+		qqgroup = "";
 	}
 
 	public void clone(User user) {
-		System.out.println(user.id);
+
 		if (!user.id.isEmpty() && user.id.substring(0, 1).equals("u")) {
 			id = user.id;
 			password = user.password;
@@ -86,6 +88,7 @@ public class User {
 			lastlogin = user.lastlogin;
 			lastlogout = user.lastlogout;
 			sign = user.sign;
+			qqgroup = user.qqgroup;
 		}
 	}
 	/**

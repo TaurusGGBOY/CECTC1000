@@ -1,5 +1,6 @@
 package ggb.s8.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -15,13 +16,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import ggb.s8.bll.UserBLL;
 import ggb.s8.model.Client;
 
 public class Friends extends JFrame {
 
 	private JPanel contentPane;
+	JTree tree;
+	JScrollPane scrollPane;
+	JPanel panel_2;
 
 	/**
 	 * Launch the application.
@@ -142,7 +149,23 @@ public class Friends extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				button_4.setForeground(Color.gray);
 				btnQun.setForeground(new Color(33, 149, 235));
+				DefaultMutableTreeNode dmtmRoot = new DefaultMutableTreeNode("我的群聊");
+				tree = new JTree(dmtmRoot);
 
+				tree.setRootVisible(true);
+				String str[] = Client.curruser.qqgroup.split(",");
+				System.out.println("QQqun " + Client.curruser.qqgroup);
+				for (String string : str) {
+
+					DefaultMutableTreeNode node = new DefaultMutableTreeNode(
+							UserBLL.returnGroup(string).name + ' ' + string);
+					dmtmRoot.add(node);
+				}
+				tree.expandRow(0);
+				updateTree();
+				scrollPane.setViewportView(tree);
+				scrollPane.revalidate();
+				scrollPane.updateUI();
 			}
 		});
 		btnQun.setForeground(Color.GRAY);
@@ -154,6 +177,21 @@ public class Friends extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				button_4.setForeground(new Color(33, 149, 235));
 				btnQun.setForeground(Color.gray);
+				DefaultMutableTreeNode dmtmRoot = new DefaultMutableTreeNode("我的好友");
+				tree = new JTree(dmtmRoot);
+
+				tree.setRootVisible(true);
+				String str[] = Client.curruser.friend.split(",");
+				for (String string : str) {
+					DefaultMutableTreeNode node = new DefaultMutableTreeNode(
+							UserBLL.returnuser(string).name + ' ' + string);
+					dmtmRoot.add(node);
+				}
+				tree.expandRow(0);
+				updateTree();
+				scrollPane.setViewportView(tree);
+				scrollPane.revalidate();
+				scrollPane.updateUI();
 			}
 		});
 
@@ -164,26 +202,48 @@ public class Friends extends JFrame {
 		panel_1.setBounds(0, 89, 200, 511);
 		contentPane.add(panel_1);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 200, 511);
 		scrollPane.setBorder(null);
 		panel_1.add(scrollPane);
 
 		DefaultMutableTreeNode dmtmRoot = new DefaultMutableTreeNode("我的好友");
-		JTree tree = new JTree(dmtmRoot);
+		tree = new JTree(dmtmRoot);
+
 		tree.setRootVisible(true);
 		String str[] = Client.curruser.friend.split(",");
 		for (String string : str) {
-			dmtmRoot.add(new DefaultMutableTreeNode(string));
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(UserBLL.returnuser(string).name + ' ' + string);
+			dmtmRoot.add(node);
 		}
 		tree.expandRow(0);
+		updateTree();
 		scrollPane.setViewportView(tree);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
+		panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_2.setBackground(Color.WHITE);
+		panel_2.setBackground(Color.LIGHT_GRAY);
 		panel_2.setBounds(199, 56, 701, 544);
 		contentPane.add(panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
+
+	}
+
+	public void updateTree() {
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent arg0) {
+				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();// 返回最后选定的节点
+				String[] str = selectedNode.toString().split(" ");
+				panel_2.removeAll();
+				if (str[1].substring(0, 1).equals("u"))
+					panel_2.add(new FriendInfo(UserBLL.returnuser(str[1])), BorderLayout.CENTER);
+				else if (str[1].substring(0, 1).equals("Q"))
+					panel_2.add(new FriendMultiInfo(UserBLL.returnGroup(str[1])), BorderLayout.CENTER);
+
+				panel_2.revalidate();
+				panel_2.repaint();
+				panel_2.updateUI();
+			}
+		});
 	}
 }

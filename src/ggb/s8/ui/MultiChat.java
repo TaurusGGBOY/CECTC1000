@@ -13,13 +13,15 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 
+import ggb.s8.model.QQgroup;
+
 public class MultiChat extends JPanel {
 	private JTextField textField;
 
 	/**
 	 * Create the panel.
 	 */
-	public MultiChat() {
+	public MultiChat(QQgroup qQgroup) {
 		setBackground(Color.WHITE);
 		setBounds(0, 0, 701, 511);
 		setLayout(null);
@@ -37,6 +39,8 @@ public class MultiChat extends JPanel {
 		panel.add(scrollPane);
 
 		JTextPane textPane = new JTextPane();
+		textPane.setText(qQgroup.record);
+		textPane.setEditable(false);
 		scrollPane.setViewportView(textPane);
 
 		JPanel panel_1 = new JPanel();
@@ -69,6 +73,10 @@ public class MultiChat extends JPanel {
 		panel_4.setBackground(Color.WHITE);
 		panel_4.setBounds(0, 0, 150, 25);
 		panel_2.add(panel_4);
+
+		JLabel lblNewLabel = new JLabel("\u6210\u5458");
+		lblNewLabel.setFont(new Font("ËÎÌו", Font.PLAIN, 15));
+		panel_4.add(lblNewLabel);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
