@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
+
+import ggb.s8.bll.MessageInterpreter;
 
 //聊天室服务器端
 public class ChatServer {
@@ -77,10 +77,8 @@ public class ChatServer {
 					// 从输入流中读一行信息
 					String strMsg = bReader.readLine();
 					if (strMsg != null) {
-						// SimpleDateFormat日期格式化类，指定日期格式为"年-月-日 时:分:秒",例如"2015-11-06 13:50:26"
-						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						// 获取当前系统时间，并使用日期格式化类格式化为指定格式的字符串
-						String strTime = dateFormat.format(new Date());
+						MessageInterpreter messageInterpreter = new MessageInterpreter(strMsg);
+						String strTime = messageInterpreter.getTime();
 						// 将时间和信息添加到信息链表集合中
 						msgList.addFirst("<== " + strTime + " ==>\n" + strMsg);
 					}

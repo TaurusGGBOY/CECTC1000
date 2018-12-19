@@ -5,15 +5,23 @@ import java.util.Map;
 
 public class AdminDAL {
 	static public List<Map<String, Object>> returnAllOL() {
-		return new MySQLHelper().query("SELECT * FROM qquser where state = '在线'");
+
+		String sql = "SELECT * FROM qquser where state = '在线'";
+		SQLDAL sqldal = new SQLDAL(sql);
+		return sqldal.execute();
+
 	}
 
 	static public List<Map<String, Object>> returnAllRegister() {
-		return new MySQLHelper().query("SELECT * FROM qquser");
+		String sql = "SELECT * FROM qquser";
+		SQLDAL sqldal = new SQLDAL(sql);
+		return sqldal.execute();
 	}
 
 	static public List<Map<String, Object>> returnAllGroup() {
-		return new MySQLHelper().query("SELECT * FROM qqgroup");
+		String sql = "SELECT * FROM qqgroup";
+		SQLDAL sqldal = new SQLDAL(sql);
+		return sqldal.execute();
 	}
 
 }

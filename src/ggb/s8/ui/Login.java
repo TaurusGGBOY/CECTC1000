@@ -23,22 +23,34 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import ggb.s8.bll.UserBLL;
+import ggb.s8.bll.LoginFactory;
 import ggb.s8.dal.MySQLHelper;
-import ggb.s8.model.Client;
 
 public class Login extends JFrame {
 
+	// 内容面板
 	private JPanel contentPane;
+	// 账号输入区域
 	private JTextField textField;
+	// 密码输入区域
 	private JPasswordField textField_1;
+	// 保存密码
 	JCheckBox checkBox = new JCheckBox("\u8BB0\u4F4F\u5BC6\u7801");
+	// 自动登录
 	JCheckBox checkBox_1 = new JCheckBox("\u81EA\u52A8\u767B\u5F55");
+	// 计时器，用来自动登录
 	private Timer timer;
+	// 计次，如果次数为4的时候将判断是否登录
 	private int count = 0;
+
+	/**
+	 * @Title: initTimer @Description: TODO(初始化计时器，计时器结束之后将根据参数选择是否自动登录) @param
+	 *         参数 @return void 返回类型 @throws
+	 */
 
 	public void initTimer() {
 		if (MySQLHelper.autologin.equals("true")) {
+			// 设置计时器的时间为1s一次
 			timer = new Timer(1000, new ActionListener() {
 
 				@Override
@@ -129,12 +141,14 @@ public class Login extends JFrame {
 		JButton btnNewButton_1 = new JButton("");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// 当按下登录键的时候，运行
 				fun_login();
 			}
 		});
 		btnNewButton_1.registerKeyboardAction(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// 按下Enter键的时候，同样运行
 				fun_login();
 			}
 		}, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -235,6 +249,11 @@ public class Login extends JFrame {
 		}
 	}
 
+	/**
+	 * @Title: fun_login @Description: TODO(登录时调用) @param 参数 @return void
+	 *         返回类型 @throws
+	 */
+
 	void fun_login() {
 		String id = textField.getText();
 		String password = String.valueOf(textField_1.getPassword());
@@ -243,19 +262,8 @@ public class Login extends JFrame {
 		new MySQLHelper().setProperty("auto_id", textField.getText());
 		new MySQLHelper().setProperty("auto_password", String.valueOf(textField_1.getPassword()));
 
-		if (UserBLL.checkidpassword(id, password)) {
-			if (id.substring(0, 1).equals("u")) {
-				Client.curruser.clone(UserBLL.returnuser(id));
-				new Logining().setVisible(true);
-				setVisible(false);
-			}
-			if (id.substring(0, 1).equals("a")) {
-				new AdminMain().setVisible(true);
-				setVisible(false);
-			}
-		} else {
-			new LoginiFail().setVisible(true);
-			setVisible(false);
-		}
+		// 使用工厂方法模式获取下一个显示的窗口
+		JFrame after = LoginFactory.makeWindow(id, password);
+		after.setVisible(true);
 	}
 }

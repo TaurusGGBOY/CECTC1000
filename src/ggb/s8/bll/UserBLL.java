@@ -12,6 +12,7 @@ import ggb.s8.model.Record;
 import ggb.s8.model.User;
 
 public class UserBLL {
+
 	static public boolean checkidpassword(String id, String password) {
 		if (id.isEmpty())
 			return false;

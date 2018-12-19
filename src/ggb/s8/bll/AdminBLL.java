@@ -10,6 +10,33 @@ import ggb.s8.dal.MySQLHelper;
 import ggb.s8.model.User;
 
 public class AdminBLL {
+	private static AdminBLL instance = null;
+
+	/**
+	 * @Title: getInstance 
+	 * @Description: TODO(单例模式) 
+	 * @param @return 参数 
+	 * @return
+	 * AdminBLL 返回类型 
+	 * @throws
+	 */
+	
+	public static AdminBLL getInstance() {
+		if (instance == null) {
+			instance = new AdminBLL();
+		}
+		return instance;
+	}
+
+	
+	    /**
+	    * @Title: returnOLNum
+	    * @Description: TODO(返回在线人数)
+	    * @param @return    参数
+	    * @return int    返回类型
+	    * @throws
+	    */
+	    
 	static public int returnOLNum() {
 		List<Map<String, Object>> list = AdminDAL.returnAllOL();
 
@@ -28,6 +55,15 @@ public class AdminBLL {
 		return count;
 	}
 
+	
+	    /**
+	    * @Title: returnRegisterNum
+	    * @Description: TODO(返回注册数目)
+	    * @param @return    参数
+	    * @return int    返回类型
+	    * @throws
+	    */
+	    
 	static public int returnRegisterNum() {
 		List<Map<String, Object>> list = AdminDAL.returnAllRegister();
 		int count = 0;
@@ -45,6 +81,15 @@ public class AdminBLL {
 		return count;
 	}
 
+	
+	    /**
+	    * @Title: returnGroupNum
+	    * @Description: TODO(返回群数量)
+	    * @param @return    参数
+	    * @return int    返回类型
+	    * @throws
+	    */
+	    
 	static public int returnGroupNum() {
 		List<Map<String, Object>> list = AdminDAL.returnAllGroup();
 		int count = 0;
@@ -62,6 +107,15 @@ public class AdminBLL {
 		return count;
 	}
 
+	
+	    /**
+	    * @Title: returnAllUser
+	    * @Description: TODO(返回所有的用户)
+	    * @param @return    参数
+	    * @return ArrayList<User>    返回类型
+	    * @throws
+	    */
+	    
 	static public ArrayList<User> returnAllUser() {
 
 		List<Map<String, Object>> list = AdminDAL.returnAllRegister();
