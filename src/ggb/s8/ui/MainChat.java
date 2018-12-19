@@ -198,6 +198,7 @@ public class MainChat extends JFrame {
 			QQgroup qQgroup;
 			if (re.substring(0, 1).equals("u")) {
 				user = UserBLL.returnuser(re);
+
 				headstring = user.head;
 				namestring = user.name;
 				idstring = user.id;
@@ -211,8 +212,9 @@ public class MainChat extends JFrame {
 			JButton onechat = new JButton();
 			onechat.setOpaque(true);
 			onechat.setBackground(new Color(250, 250, 250));
-
-			ImageIcon image1 = new ImageIcon(OneChat.class.getResource("/ggb/s8/ui/" + headstring + ".png"));
+			if (headstring.equals(""))
+				headstring = "h1";
+			ImageIcon image1 = new ImageIcon(MainChat.class.getResource("/ggb/s8/ui/" + headstring + ".png"));
 			image1.setImage(image1.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
 			onechat.setIcon(image1);
 
@@ -228,6 +230,7 @@ public class MainChat extends JFrame {
 						panel_2.add(new MultiChat(UserBLL.returnGroup(str[1])));
 					panel_2.revalidate();
 					panel_2.updateUI();
+					System.out.println("当前用户" + Client.curruser.id);
 				}
 			});
 			panel_1.add(onechat);

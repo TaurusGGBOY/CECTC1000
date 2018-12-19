@@ -1,11 +1,14 @@
 package ggb.s8.bll;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 import ggb.s8.dal.MySQLHelper;
 import ggb.s8.dal.UserDAL;
+import ggb.s8.model.Client;
 import ggb.s8.model.QQgroup;
+import ggb.s8.model.Record;
 import ggb.s8.model.User;
 
 public class UserBLL {
@@ -13,26 +16,20 @@ public class UserBLL {
 		if (id.isEmpty())
 			return false;
 		try {
-			ResultSet rs = UserDAL.checkidpassword(id, password);
-			if (rs.next()) {
-				if (rs.getInt("deleted") == 1) {
+			List<Map<String, Object>> list = UserDAL.checkidpassword(id, password);
+			if (list.isEmpty())
+				return false;
+			for (Map<String, Object> rs : list)
+				if ((int) rs.get("deleted") == 1) {
 					new MySQLHelper().close();
 					return false;
 				}
-			} else {
-				new MySQLHelper().close();
-				return false;
-			}
-			new MySQLHelper().close();
 			return true;
-		} catch (
-
-		SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			new MySQLHelper().close();
 			e.printStackTrace();
 		}
-		new MySQLHelper().close();
 		return false;
 	}
 
@@ -40,52 +37,53 @@ public class UserBLL {
 		if (id.isEmpty())
 			return false;
 		try {
-			ResultSet rs = UserDAL.checkid(id);
-			if (rs.next())
-				if (rs.getInt("deleted") == 1) {
+			List<Map<String, Object>> list = UserDAL.checkid(id);
+			for (Map<String, Object> rs : list)
+				if ((int) rs.get("deleted") == 1) {
 					new MySQLHelper().close();
 					return false;
+				} else {
+					return false;
 				}
-			new MySQLHelper().close();
 			return true;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			new MySQLHelper().close();
 			e.printStackTrace();
 		}
-		new MySQLHelper().close();
 		return false;
 	}
 
 	static public User returnuser(String id) {
 		User user = new User();
+
 		try {
-			ResultSet rs = UserDAL.returnuser(id);
-			if (rs.next()) {
-				if (rs.getInt("deleted") != 1) {
-					user.id = rs.getString("id");
-					user.password = rs.getString("password");
-					user.name = rs.getString("name");
-					user.age = rs.getInt("age");
-					user.registertime = rs.getDate("registertime");
-					user.sex = rs.getString("sex");
-					user.birth = rs.getDate("birth");
-					user.hometown = rs.getString("hometown");
-					user.place = rs.getString("place");
-					user.career = rs.getString("career");
-					user.company = rs.getString("company");
-					user.school = rs.getString("school");
-					user.tel = rs.getString("tel");
-					user.mail = rs.getString("mail");
-					user.head = rs.getString("head");
-					user.state = rs.getString("state");
-					user.friend = rs.getString("friend");
-					user.lastlogin = rs.getDate("lastlogin");
-					user.lastlogout = rs.getDate("lastlogout");
-					user.sign = rs.getString("sign");
-					user.qqgroup = rs.getString("qqgroup");
+			List<Map<String, Object>> list = UserDAL.checkid(id);
+			for (Map<String, Object> rs : list)
+				if (Integer.parseInt(rs.get("deleted").toString()) != 1) {
+					user.id = String.valueOf(rs.get("id"));
+					user.password = String.valueOf(rs.get("password"));
+					user.name = String.valueOf(rs.get("name"));
+					user.age = (int) rs.get("age");
+					user.registertime = new SimpleDateFormat("yyyy-M-dd").parse(rs.get("registertime").toString());
+					user.sex = String.valueOf(rs.get("sex"));
+					user.birth = new SimpleDateFormat("yyyy-M-dd").parse(rs.get("birth").toString());
+					user.hometown = String.valueOf(rs.get("hometown"));
+					user.place = String.valueOf(rs.get("place"));
+					user.career = String.valueOf(rs.get("career"));
+					user.company = String.valueOf(rs.get("company"));
+					user.school = String.valueOf(rs.get("school"));
+					user.tel = String.valueOf(rs.get("tel"));
+					user.mail = String.valueOf(rs.get("mail"));
+					user.head = String.valueOf(rs.get("head"));
+					user.state = String.valueOf(rs.get("state"));
+					user.friend = String.valueOf(rs.get("friend"));
+					user.lastlogin = new SimpleDateFormat("yyyy-M-dd").parse(rs.get("lastlogin").toString());
+					user.lastlogout = new SimpleDateFormat("yyyy-M-dd").parse(rs.get("lastlogout").toString());
+					user.sign = String.valueOf(rs.get("sign"));
+					user.qqgroup = String.valueOf(rs.get("qqgroup"));
+
 				}
-			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -113,41 +111,120 @@ public class UserBLL {
 		new MySQLHelper().close();
 	}
 
-	static public String singleRecord(User user) {
-		String string = "";
+	static public Record singleRecord(User user) {
+		Record record = new Record();
 		try {
-			ResultSet rs = UserDAL.singleRecord(user);
-			if (rs.next())
-				string = rs.getString("record");
+			List<Map<String, Object>> list = UserDAL.singleRecord(user);
+			for (Map<String, Object> rs : list) {
+				record.sourid = rs.get("sourid").toString();
+				record.destid = rs.get("destid").toString();
+				record.record = rs.get("record").toString();
+			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		new MySQLHelper().close();
-		return string;
+		return record;
 	}
 
 	static public QQgroup returnGroup(String id) {
 		QQgroup user = new QQgroup();
 		try {
-			ResultSet rs = UserDAL.returnGroup(id);
-			if (rs.next()) {
-				if (rs.getInt("deleted") != 1) {
-					user.id = rs.getString("id");
-					user.name = rs.getString("name");
-					user.people = rs.getString("people");
-					user.head = rs.getString("head");
-					user.buildtime = rs.getDate("buildtime");
-					user.record = rs.getString("record");
-					user.introduce = rs.getString("introduce");
+			List<Map<String, Object>> list = UserDAL.returnGroup(id);
+			for (Map<String, Object> rs : list) {
+				{
+					if (Integer.parseInt(rs.get("deleted").toString()) != 1) {
+						user.id = rs.get("id").toString();
+						user.name = rs.get("name").toString();
+						user.people = rs.get("people").toString();
+						user.head = rs.get("head").toString();
+						user.buildtime = new SimpleDateFormat("yyyy-M-dd").parse(rs.get("buildtime").toString());
+						;
+						user.record = rs.get("record").toString();
+						user.introduce = rs.get("introduce").toString();
+					}
 				}
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		new MySQLHelper().close();
 		return user;
+	}
+
+	static public Boolean addFriend(String id) {
+		if (!isFriend(id)) {
+			Client.curruser.friend += "," + id;
+			updateUserInfo(Client.curruser);
+			User user = returnuser(id);
+			user.friend += "," + Client.curruser.id;
+			updateUserInfo(user);
+			return true;
+		}
+		return false;
+	}
+
+	static public Boolean isFriend(String id) {
+		String str[] = Client.curruser.friend.split(",");
+		for (String string : str) {
+			if (id.equals(string))
+				return true;
+		}
+		return false;
+	}
+
+	static public Boolean addGroup(String id) {
+		if (!isInGroup(id)) {
+			Client.curruser.qqgroup += "," + id;
+			updateUserInfo(Client.curruser);
+			QQgroup user = returnGroup(id);
+			user.people += "," + Client.curruser.id;
+			updateGroupInfo(user);
+			return true;
+		}
+		return false;
+	}
+
+	static public Boolean isInGroup(String id) {
+		String str[] = Client.curruser.qqgroup.split(",");
+		for (String string : str) {
+			if (id.equals(string))
+				return true;
+		}
+		return false;
+	}
+
+	static public void updateGroupInfo(QQgroup qqgroup) {
+		UserDAL.updateGroupInfo(qqgroup);
+		new MySQLHelper().close();
+	}
+
+	static public void AddRecord(String msg) {
+		if (Client.currchat.substring(0, 1).equals("u")) {
+			User chatUser = UserBLL.returnuser(Client.currchat);
+			Record record = singleRecord(chatUser);
+			record.record += Client.curruser.name + "(" + Client.curruser.id + ")"
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()) + "\r\n" + msg
+					+ "\r\n";
+			updateUserRecord(record);
+
+		} else if (Client.currchat.substring(0, 1).equals("Q")) {
+			QQgroup chatUser = returnGroup(Client.currchat);
+
+			chatUser.record += Client.curruser.name + "(" + Client.curruser.id + ")"
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()) + "\r\n" + msg
+					+ "\r\n";
+			updateGroupInfo(chatUser);
+		}
+		new MySQLHelper().close();
+
+	}
+
+	static public void updateUserRecord(Record record) {
+		UserDAL.updateUserRecord(record);
+		new MySQLHelper().close();
 	}
 }

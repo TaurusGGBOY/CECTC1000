@@ -25,5 +25,6 @@ public class OneChat extends JButton {
 
 		setText(us.name + "                          ");
 		user.clone(us);
+
 	}
 }

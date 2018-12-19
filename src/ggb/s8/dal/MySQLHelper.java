@@ -9,7 +9,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -31,6 +36,7 @@ public class MySQLHelper {
 	public static String auto_password = "";
 	public static Connection connection = null; // 数据库连接
 	public static PreparedStatement preparedStatement = null; // 待查询语句描述对象
+	public static boolean isOpen = false;
 
 	/**
 	 * 
@@ -61,10 +67,12 @@ public class MySQLHelper {
 
 	public void connection() {
 		try {
-			Class.forName(name);// 指定连接类型
-			connection = DriverManager.getConnection(url, user, password);// 获取连接
+			if (!isOpen) {
+				Class.forName(name);// 指定连接类型
+				connection = DriverManager.getConnection(url, user, password);// 获取连接
+				isOpen = true;
+			}
 		} catch (Exception e) {
-			close();
 			e.printStackTrace();
 
 		}
@@ -83,6 +91,7 @@ public class MySQLHelper {
 					connection.close();
 					preparedStatement.close();
 					connection = null;
+					isOpen = false;
 				}
 		} catch (SQLException e) {
 			System.out.println("关闭数据库出现问题！！");
@@ -95,19 +104,36 @@ public class MySQLHelper {
 	 * @方法名称: query ； @方法描述: 查询操作 ； @参数 ：@param sql：查询操作语句 ； @返回类型: ResultSet
 	 *        :查询结果数据集； @创建人：奔跑的鸡丝 ; @创建时间：2014-11-25 下午8:49:25； @throws
 	 */
-	public ResultSet query(String sql) {
+	public List<Map<String, Object>> query(String sql) {
 		connection();
 		ResultSet resultSet = null;
-
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		try {
-			preparedStatement = connection.prepareStatement(sql); // 准备执行语句
+			preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY,
+					ResultSet.CONCUR_READ_ONLY); // 准备执行语句
 			resultSet = preparedStatement.executeQuery();
+
+			// return the description of this ResultSet object's columns
+			ResultSetMetaData rsMetaData = resultSet.getMetaData();
+			// return the number of columns
+			int columnCount = rsMetaData.getColumnCount();
+			String columnName = "";
+			while (resultSet.next()) {
+				Map<String, Object> rowData = new HashMap<String, Object>();
+				for (int i = 1; i <= columnCount; i++) {
+					// return 第i列的column name
+					columnName = rsMetaData.getColumnName(i);
+					rowData.put(columnName, resultSet.getObject(i));
+				}
+				list.add(rowData);
+			}
 
 		} catch (Exception e) {
 			System.out.println("查询错误，请检查！！");
 			e.printStackTrace();
 		}
-		return resultSet;
+		close();
+		return list;
 	}
 
 	/**
@@ -127,6 +153,7 @@ public class MySQLHelper {
 			System.out.println("插入数据库时出现错误！！");
 			e.printStackTrace();
 		}
+		close();
 		return flag;
 	}
 
@@ -149,6 +176,7 @@ public class MySQLHelper {
 			System.out.println("查询总记录数失败！！");
 			e.printStackTrace();
 		}
+		close();
 		return count;
 	}
 

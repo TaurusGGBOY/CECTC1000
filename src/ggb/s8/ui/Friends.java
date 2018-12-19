@@ -199,7 +199,7 @@ public class Friends extends JFrame {
 		panel_1.setLayout(null);
 		panel_1.setBorder(null);
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(0, 89, 200, 511);
+		panel_1.setBounds(0, 89, 200, 450);
 		contentPane.add(panel_1);
 
 		scrollPane = new JScrollPane();
@@ -226,6 +226,19 @@ public class Friends extends JFrame {
 		panel_2.setBounds(199, 56, 701, 544);
 		contentPane.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
+
+		JButton button_6 = new JButton("");
+		button_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new Find().setVisible(true);
+				setVisible(false);
+			}
+		});
+		button_6.setIcon(new ImageIcon(Friends.class.getResource("/ggb/s8/ui/\u6DFB\u52A0.png")));
+		button_6.setContentAreaFilled(false);
+		button_6.setBorder(null);
+		button_6.setBounds(157, 558, 32, 32);
+		contentPane.add(button_6);
 
 	}
 

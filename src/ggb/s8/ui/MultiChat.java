@@ -2,6 +2,14 @@ package ggb.s8.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -11,12 +19,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
 
+import ggb.s8.bll.UserBLL;
+import ggb.s8.model.Client;
 import ggb.s8.model.QQgroup;
 
 public class MultiChat extends JPanel {
 	private JTextField textField;
+	JTextPane textPane;
+	Socket socket;
+	PrintWriter pWriter;
+	BufferedReader bReader;
+	JPanel panel;
 
 	/**
 	 * Create the panel.
@@ -26,7 +40,7 @@ public class MultiChat extends JPanel {
 		setBounds(0, 0, 701, 511);
 		setLayout(null);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(BorderFactory.createLineBorder(new Color(157, 157, 157)));
 		panel.setBackground(Color.WHITE);
@@ -34,11 +48,10 @@ public class MultiChat extends JPanel {
 		add(panel);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(0, 0, 550, 370);
 		panel.add(scrollPane);
 
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setText(qQgroup.record);
 		textPane.setEditable(false);
 		scrollPane.setViewportView(textPane);
@@ -108,6 +121,7 @@ public class MultiChat extends JPanel {
 		panel_3.add(label_1);
 
 		JButton button_1 = new JButton("");
+
 		button_1.setIcon(new ImageIcon(MultiChat.class.getResource("/ggb/s8/ui/\u53D1\u9001\u6309\u94AE.png")));
 		button_1.setContentAreaFilled(false);
 		button_1.setBorder(null);
@@ -119,5 +133,64 @@ public class MultiChat extends JPanel {
 		textField.setBorder(null);
 		panel_3.add(textField);
 		textField.setColumns(10);
+
+		try {
+			// 创建一个套接字
+			socket = new Socket("127.0.0.1", 28888);
+			// 创建一个往套接字中写数据的管道，即输出流，给服务器发送信息
+			pWriter = new PrintWriter(socket.getOutputStream());
+			// 创建一个从套接字读数据的管道，即输入流，读服务器的返回信息
+			bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String strName = Client.curruser.name;
+				String strMsg = textField.getText();
+				if (!strMsg.equals("")) {
+					// 通过输出流将数据发送给服务器
+					UserBLL.AddRecord(strMsg);
+					pWriter.println(strName + " 说：" + strMsg);
+					pWriter.flush();
+					// 清空文本框
+					textField.setText("");
+					updateRecord(Client.currchat);
+				}
+			}
+		});
+
+		// 启动线程
+		new GetMsgFromServer().start();
+
+	}
+
+	class GetMsgFromServer extends Thread {
+		public void run() {
+			while (this.isAlive()) {
+				try {
+					String strMsg = bReader.readLine();
+					if (strMsg != null) {
+						// 在文本域中显示聊天信息
+						System.out.println("当前聊天" + Client.currchat);
+						updateRecord(Client.currchat);
+
+					}
+					Thread.sleep(200);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	void updateRecord(String id) {
+		String record = UserBLL.returnGroup(id).record;
+		textPane.setText(record);
+		panel.revalidate();
+		panel.updateUI();
 	}
 }
