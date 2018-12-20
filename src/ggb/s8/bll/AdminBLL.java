@@ -99,4 +99,11 @@ public class AdminBLL {
 		return uList;
 	}
 
+	static public void resetPass(String id) {
+		AdminDAL.resetPass(id);
+	}
+
+	static public void comOff(String id) {
+		AdminDAL.comOff(id);
+	}
 }

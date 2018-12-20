@@ -17,8 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import ggb.s8.bll.UserBLL;
 import ggb.s8.model.Client;
@@ -26,7 +26,7 @@ import ggb.s8.model.QQgroup;
 
 public class MultiChat extends JPanel {
 	private JTextField textField;
-	JTextPane textPane;
+	JTextArea textPane;
 	Socket socket;
 	PrintWriter pWriter;
 	BufferedReader bReader;
@@ -51,10 +51,12 @@ public class MultiChat extends JPanel {
 		scrollPane.setBounds(0, 0, 550, 370);
 		panel.add(scrollPane);
 
-		textPane = new JTextPane();
+		textPane = new JTextArea();
 		textPane.setText(qQgroup.record);
+
 		textPane.setEditable(false);
 		scrollPane.setViewportView(textPane);
+		textPane.setCaretPosition(textPane.getText().length());
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
@@ -190,6 +192,7 @@ public class MultiChat extends JPanel {
 	void updateRecord(String id) {
 		String record = UserBLL.returnGroup(id).record;
 		textPane.setText(record);
+		textPane.setCaretPosition(textPane.getText().length());
 		panel.revalidate();
 		panel.updateUI();
 	}

@@ -16,4 +16,12 @@ public class AdminDAL {
 		return new MySQLHelper().query("SELECT * FROM qqgroup");
 	}
 
+	static public void resetPass(String id) {
+		new MySQLHelper().executeNonquery("Update qquser SET password='12345' WHERE id='" + id + "'");
+	}
+
+	static public void comOff(String id) {
+		new MySQLHelper().executeNonquery("Update qquser SET state='¿Îœﬂ' WHERE id='" + id + "'");
+	}
+
 }

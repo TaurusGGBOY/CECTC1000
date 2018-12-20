@@ -136,4 +136,9 @@ public class UserDAL {
 		System.out.println(sql);
 		new MySQLHelper().executeNonquery(sql);
 	}
+
+	static public void createGroup(String id, String name, String introduce) {
+		new MySQLHelper().executeNonquery(
+				"INSERT INTO qqgroup (id, name, introduce) VALUES('" + id + "','" + name + "','" + introduce + "')");
+	}
 }

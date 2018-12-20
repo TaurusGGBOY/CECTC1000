@@ -20,7 +20,7 @@ public class UserBLL {
 			if (list.isEmpty())
 				return false;
 			for (Map<String, Object> rs : list)
-				if ((int) rs.get("deleted") == 1) {
+				if (Boolean.parseBoolean(rs.get("deleted").toString()) == true) {
 					new MySQLHelper().close();
 					return false;
 				}
@@ -226,5 +226,9 @@ public class UserBLL {
 	static public void updateUserRecord(Record record) {
 		UserDAL.updateUserRecord(record);
 		new MySQLHelper().close();
+	}
+
+	static public void createGroup(String id, String name, String introduce) {
+		UserDAL.createGroup(id, name, introduce);
 	}
 }

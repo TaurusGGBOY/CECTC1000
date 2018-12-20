@@ -11,6 +11,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +23,7 @@ import ggb.s8.model.User;
 public class AdminPeo extends JPanel {
 	private JTable table;
 	private String[] columnNames = { "姓名", "ID", "状态", "注册时间", "最后登录", "最后登出" };
+	DefaultTableModel dtm;
 
 	/**
 	 * Create the panel.
@@ -37,7 +39,7 @@ public class AdminPeo extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-		DefaultTableModel dtm = (DefaultTableModel) table.getModel();// 创建model
+		dtm = (DefaultTableModel) table.getModel();// 创建model
 		dtm.setColumnIdentifiers(columnNames);// 创建表头，表头的类型可以是vector 或者Object[]
 		scrollPane.setViewportView(table);
 
@@ -45,6 +47,11 @@ public class AdminPeo extends JPanel {
 		button.setIcon(new ImageIcon(AdminPeo.class.getResource("/ggb/s8/ui/\u6309\u94AE.png")));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int sc = table.getSelectedRow();
+				String id = (String) table.getValueAt(sc, 1);
+				AdminBLL.resetPass(id);
+				JOptionPane.showMessageDialog(null, "用户" + id + " 密码重置为123456，成功", null, JOptionPane.PLAIN_MESSAGE);
+
 			}
 		});
 
@@ -65,12 +72,27 @@ public class AdminPeo extends JPanel {
 		add(button);
 
 		JButton button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int sc = table.getSelectedRow();
+				String id = (String) table.getValueAt(sc, 1);
+				AdminBLL.comOff(id);
+				JOptionPane.showMessageDialog(null, "用户" + id + "强制下线，成功", null, JOptionPane.PLAIN_MESSAGE);
+				updateTable();
+				table.updateUI();
+			}
+		});
 		button_1.setIcon(new ImageIcon(AdminPeo.class.getResource("/ggb/s8/ui/\u6309\u94AE.png")));
 		button_1.setContentAreaFilled(false);
 		button_1.setBorder(null);
 		button_1.setBounds(474, 406, 195, 31);
 		add(button_1);
+		updateTable();
+	}
+
+	void updateTable() {
 		ArrayList<User> userlist = AdminBLL.returnAllUser();
+		dtm.setRowCount(0);
 		for (User user : userlist) {
 			Vector<String> v1 = new Vector<String>();
 			v1.add(user.name);

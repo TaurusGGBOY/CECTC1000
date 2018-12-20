@@ -66,6 +66,25 @@ public class Find extends JFrame {
 		label_4.setBounds(476, 93, 36, 23);
 		contentPane.add(label_4);
 
+		JLabel label_5 = new JLabel("\u521B\u5EFA\u7FA4");
+		label_5.setForeground(Color.WHITE);
+		label_5.setFont(new Font("ËÎÌו", Font.BOLD, 13));
+		label_5.setBounds(546, 93, 47, 23);
+		contentPane.add(label_5);
+
+		JButton button_3 = new JButton("");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new CreateGroup().setVisible(true);
+				setVisible(false);
+			}
+		});
+		button_3.setIcon(new ImageIcon(Find.class.getResource("/ggb/s8/ui/\u6CE8\u518C\u6309\u94AE.png")));
+		button_3.setContentAreaFilled(false);
+		button_3.setBorder(null);
+		button_3.setBounds(539, 93, 60, 22);
+		contentPane.add(button_3);
+
 		JButton button_2 = new JButton("");
 
 		button_2.setIcon(new ImageIcon(Find.class.getResource("/ggb/s8/ui/\u53D1\u9001\u6309\u94AE.png")));

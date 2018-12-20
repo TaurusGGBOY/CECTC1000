@@ -29,6 +29,7 @@ public class AdminServer extends JPanel {
 					toggleButton.setText("服务器:开");
 				} else {
 					toggleButton.setText("服务器:关");
+					System.exit(0);
 				}
 			}
 		});

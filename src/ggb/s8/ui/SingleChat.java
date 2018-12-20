@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.text.DefaultCaret;
 
 import ggb.s8.bll.UserBLL;
 import ggb.s8.model.Client;
@@ -56,9 +57,12 @@ public class SingleChat extends JPanel {
 		recordPanel = new JTextArea();
 		scrollPane.setViewportView(recordPanel);
 		recordPanel.setText(record);
+		recordPanel.setCaretPosition(recordPanel.getText().length());
 		recordPanel.setLineWrap(true); // 激活自动换行功能
 		recordPanel.setWrapStyleWord(true);
 		recordPanel.setEditable(false);
+		DefaultCaret caret = (DefaultCaret) recordPanel.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(null);
@@ -92,6 +96,8 @@ public class SingleChat extends JPanel {
 		button.setBorder(null);
 		button.setBounds(626, 107, 65, 22);
 		panel_2.add(button);
+
+		recordPanel.setCaretPosition(recordPanel.getText().length());
 
 		try {
 			// 创建一个套接字
@@ -149,6 +155,7 @@ public class SingleChat extends JPanel {
 	void updateRecord(User user) {
 		String record = UserBLL.singleRecord(user).record;
 		recordPanel.setText(record);
+		recordPanel.setCaretPosition(recordPanel.getText().length());
 		panel.revalidate();
 		panel.repaint();
 		panel.updateUI();
