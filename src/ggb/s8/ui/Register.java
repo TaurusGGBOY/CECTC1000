@@ -20,162 +20,162 @@ import ggb.s8.bll.UserBLL;
 
 public class Register extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JTextField textField_1;
+    private JTextField textField_2;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Register frame = new Register();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Register frame = new Register();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	/**
-	 * Create the frame.
-	 */
-	public Register() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 340, 510);
-		setLocationRelativeTo(null);
-		setUndecorated(true);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		JButton btnNewButton = new JButton("");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setExtendedState(JFrame.ICONIFIED); // ×îÐ¡»¯
-			}
-		});
+    /**
+     * Create the frame.
+     */
+    public Register() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 340, 510);
+        setLocationRelativeTo(null);
+        setUndecorated(true);
+        contentPane = new JPanel();
+        contentPane.setBackground(Color.WHITE);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        JButton btnNewButton = new JButton("");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                setExtendedState(JFrame.ICONIFIED); // ï¿½ï¿½Ð¡ï¿½ï¿½
+            }
+        });
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(10, 6, 20, 20);
-		ImageIcon image1 = new ImageIcon(Register.class.getResource("/ggb/s8/ui/icon_small.png"));
-		image1.setImage(image1.getImage().getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),
-				Image.SCALE_DEFAULT));
-		lblNewLabel_1.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/icon_20.png")));
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setBounds(10, 6, 20, 20);
+        ImageIcon image1 = new ImageIcon(Register.class.getResource("/ggb/s8/ui/icon_small.png"));
+        image1.setImage(image1.getImage().getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),
+                Image.SCALE_DEFAULT));
+        lblNewLabel_1.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/icon_20.png")));
 
-		contentPane.add(lblNewLabel_1);
+        contentPane.add(lblNewLabel_1);
 
-		JLabel label_1 = new JLabel("\u6CE8\u518C\u8D26\u53F7");
-		label_1.setForeground(Color.GRAY);
-		label_1.setBounds(36, 6, 53, 20);
-		contentPane.add(label_1);
+        JLabel label_1 = new JLabel("\u6CE8\u518C\u8D26\u53F7");
+        label_1.setForeground(Color.GRAY);
+        label_1.setBounds(36, 6, 53, 20);
+        contentPane.add(label_1);
 
-		JLabel label_4 = new JLabel("\u7ACB\u5373\u6CE8\u518C");
-		label_4.setForeground(Color.WHITE);
-		label_4.setFont(new Font("ËÎÌå", Font.BOLD, 20));
-		label_4.setBounds(120, 369, 104, 31);
-		contentPane.add(label_4);
+        JLabel label_4 = new JLabel("\u7ACB\u5373\u6CE8\u518C");
+        label_4.setForeground(Color.WHITE);
+        label_4.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 20));
+        label_4.setBounds(120, 369, 104, 31);
+        contentPane.add(label_4);
 
-		JButton button_2 = new JButton("");
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String id = textField.getText();
-				String password = textField_1.getText();
-				String name = textField_2.getText();
-				if (id.isEmpty())
-					JOptionPane.showMessageDialog(null, "ÓÃ»§Ãû²»ÄÜÎª¿Õ", "´íÎó", JOptionPane.PLAIN_MESSAGE);
-				else if (!id.substring(0, 1).equals("u"))
-					JOptionPane.showMessageDialog(null, "ÓÃ»§¿ªÍ·±ØÐëÒÔu¿ªÊ¼", "´íÎó", JOptionPane.PLAIN_MESSAGE);
-				else if (UserBLL.checkid(id)) {
-					JOptionPane.showMessageDialog(null, "¸ÃÓÃ»§ÒÑ¾­´æÔÚ", "´íÎó", JOptionPane.PLAIN_MESSAGE);
+        JButton button_2 = new JButton("");
+        button_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String id = textField.getText();
+                String password = textField_1.getText();
+                String name = textField_2.getText();
+                if (id.isEmpty())
+                    JOptionPane.showMessageDialog(null, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", JOptionPane.PLAIN_MESSAGE);
+                else if (!id.substring(0, 1).equals("u"))
+                    JOptionPane.showMessageDialog(null, "ï¿½Ã»ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½Ê¼", "ï¿½ï¿½ï¿½ï¿½", JOptionPane.PLAIN_MESSAGE);
+                else if (UserBLL.checkid(id)) {
+                    JOptionPane.showMessageDialog(null, "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", JOptionPane.PLAIN_MESSAGE);
 
-				} else {
-					UserBLL.register(id, password, name);
-					JOptionPane.showMessageDialog(null, "×¢²á³É¹¦", "³É¹¦", JOptionPane.PLAIN_MESSAGE);
-				}
-				new Login().setVisible(true);
-				setVisible(false);
-			}
-		});
-		button_2.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/\u6CE8\u518C\u6309\u94AE.png")));
-		button_2.setContentAreaFilled(false);
-		button_2.setBorder(null);
-		button_2.setBounds(20, 360, 300, 45);
-		contentPane.add(button_2);
-		btnNewButton.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/-_grey.png")));
-		btnNewButton.setBounds(290, 10, 20, 20);
-		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setBorder(null);
-		contentPane.add(btnNewButton);
+                } else {
+                    UserBLL.register(id, password, name);
+                    JOptionPane.showMessageDialog(null, "×¢ï¿½ï¿½É¹ï¿½", "ï¿½É¹ï¿½", JOptionPane.PLAIN_MESSAGE);
+                }
+                new Login().setVisible(true);
+                setVisible(false);
+            }
+        });
+        button_2.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/\u6CE8\u518C\u6309\u94AE.png")));
+        button_2.setContentAreaFilled(false);
+        button_2.setBorder(null);
+        button_2.setBounds(20, 360, 300, 45);
+        contentPane.add(button_2);
+        btnNewButton.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/-_grey.png")));
+        btnNewButton.setBounds(290, 10, 20, 20);
+        btnNewButton.setContentAreaFilled(false);
+        btnNewButton.setBorder(null);
+        contentPane.add(btnNewButton);
 
-		JButton button = new JButton("");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Login().setVisible(true);
-				setVisible(false);
-			}
-		});
-		button.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/x_grey.png")));
-		button.setBounds(310, 10, 20, 20);
-		button.setContentAreaFilled(false);
-		button.setBorder(null);
-		contentPane.add(button);
+        JButton button = new JButton("");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Login().setVisible(true);
+                setVisible(false);
+            }
+        });
+        button.setIcon(new ImageIcon(Register.class.getResource("/ggb/s8/ui/x_grey.png")));
+        button.setBounds(310, 10, 20, 20);
+        button.setContentAreaFilled(false);
+        button.setBorder(null);
+        contentPane.add(button);
 
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(
-				new ImageIcon(Register.class.getResource("/ggb/s8/ui/\u7F16\u8F91\u8D44\u6599\u6807\u9898\u680F.png")));
-		lblNewLabel.setBounds(0, 0, 340, 33);
-		contentPane.add(lblNewLabel);
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setIcon(
+                new ImageIcon(Register.class.getResource("/ggb/s8/ui/\u7F16\u8F91\u8D44\u6599\u6807\u9898\u680F.png")));
+        lblNewLabel.setBounds(0, 0, 340, 33);
+        contentPane.add(lblNewLabel);
 
-		JLabel label = new JLabel("\u8D26\u53F7");
-		label.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		label.setForeground(Color.GRAY);
-		label.setBounds(10, 161, 50, 40);
-		contentPane.add(label);
+        JLabel label = new JLabel("\u8D26\u53F7");
+        label.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 18));
+        label.setForeground(Color.GRAY);
+        label.setBounds(10, 161, 50, 40);
+        contentPane.add(label);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(60, 161, 250, 40);
-		contentPane.add(textField);
+        textField = new JTextField();
+        textField.setColumns(10);
+        textField.setBounds(60, 161, 250, 40);
+        contentPane.add(textField);
 
-		JLabel label_2 = new JLabel("\u5BC6\u7801");
-		label_2.setForeground(Color.GRAY);
-		label_2.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		label_2.setBounds(10, 222, 50, 40);
-		contentPane.add(label_2);
+        JLabel label_2 = new JLabel("\u5BC6\u7801");
+        label_2.setForeground(Color.GRAY);
+        label_2.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 18));
+        label_2.setBounds(10, 222, 50, 40);
+        contentPane.add(label_2);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(60, 222, 250, 40);
-		contentPane.add(textField_1);
+        textField_1 = new JTextField();
+        textField_1.setColumns(10);
+        textField_1.setBounds(60, 222, 250, 40);
+        contentPane.add(textField_1);
 
-		JLabel label_3 = new JLabel("\u6635\u79F0");
-		label_3.setForeground(Color.GRAY);
-		label_3.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		label_3.setBounds(10, 288, 50, 40);
-		contentPane.add(label_3);
+        JLabel label_3 = new JLabel("\u6635\u79F0");
+        label_3.setForeground(Color.GRAY);
+        label_3.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 18));
+        label_3.setBounds(10, 288, 50, 40);
+        contentPane.add(label_3);
 
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(60, 288, 250, 40);
-		contentPane.add(textField_2);
+        textField_2 = new JTextField();
+        textField_2.setColumns(10);
+        textField_2.setBounds(60, 288, 250, 40);
+        contentPane.add(textField_2);
 
-		JLabel lblNewLabel_2 = new JLabel("\u6B22\u8FCE\u6CE8\u518CCECTC1000");
-		lblNewLabel_2.setFont(new Font("ËÎÌå", Font.BOLD, 34));
-		lblNewLabel_2.setBounds(10, 59, 320, 40);
-		contentPane.add(lblNewLabel_2);
+        JLabel lblNewLabel_2 = new JLabel("\u6B22\u8FCE\u6CE8\u518CCECTC1000");
+        lblNewLabel_2.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 34));
+        lblNewLabel_2.setBounds(10, 59, 320, 40);
+        contentPane.add(lblNewLabel_2);
 
-		JLabel label_5 = new JLabel("\u6BCF\u4E00\u5929\uFF0C\u6C9F\u901A\uFF0C\u4E50\u54C9");
-		label_5.setFont(new Font("ËÎÌå", Font.PLAIN, 30));
-		label_5.setBounds(10, 100, 320, 40);
-		contentPane.add(label_5);
-		ImageIcon image = new ImageIcon(
-				Register.class.getResource("/ggb/s8/ui/\u7F16\u8F91\u8D44\u6599\u4E0B\u9762.png"));
-		image.setImage(image.getImage().getScaledInstance(JLabel.WIDTH, JLabel.HEIGHT, Image.SCALE_DEFAULT));
-	}
+        JLabel label_5 = new JLabel("\u6BCF\u4E00\u5929\uFF0C\u6C9F\u901A\uFF0C\u4E50\u54C9");
+        label_5.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 30));
+        label_5.setBounds(10, 100, 320, 40);
+        contentPane.add(label_5);
+        ImageIcon image = new ImageIcon(
+                Register.class.getResource("/ggb/s8/ui/\u7F16\u8F91\u8D44\u6599\u4E0B\u9762.png"));
+        image.setImage(image.getImage().getScaledInstance(JLabel.WIDTH, JLabel.HEIGHT, Image.SCALE_DEFAULT));
+    }
 }

@@ -24,140 +24,140 @@ import ggb.s8.model.Client;
 import ggb.s8.model.User;
 
 public class SingleChat extends JPanel {
-	private JTextArea textField;
-	private String record;
-	JTextArea recordPanel;
-	Socket socket;
-	PrintWriter pWriter;
-	BufferedReader bReader;
-	JPanel panel;
+    private JTextArea textField;
+    private String record;
+    JTextArea recordPanel;
+    Socket socket;
+    PrintWriter pWriter;
+    BufferedReader bReader;
+    JPanel panel;
 
-	/**
-	 * Create the panel.
-	 */
-	public SingleChat(User user) {
-		record = UserBLL.singleRecord(user).record;
-		setBackground(Color.WHITE);
-		setBounds(0, 0, 701, 511);
-		setLayout(null);
+    /**
+     * Create the panel.
+     */
+    public SingleChat(User user) {
+        record = UserBLL.singleRecord(user).record;
+        setBackground(Color.WHITE);
+        setBounds(0, 0, 701, 511);
+        setLayout(null);
 
-		panel = new JPanel();
-		panel.setBorder(null);
-		panel.setBounds(0, 0, 701, 370);
-		panel.setBackground(Color.WHITE);
-		add(panel);
-		panel.setLayout(null);
+        panel = new JPanel();
+        panel.setBorder(null);
+        panel.setBounds(0, 0, 701, 370);
+        panel.setBackground(Color.WHITE);
+        add(panel);
+        panel.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBackground(Color.WHITE);
-		scrollPane.setBounds(0, 0, 701, 370);
-		panel.add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBackground(Color.WHITE);
+        scrollPane.setBounds(0, 0, 701, 370);
+        panel.add(scrollPane);
 
-		recordPanel = new JTextArea();
-		scrollPane.setViewportView(recordPanel);
-		recordPanel.setText(record);
-		recordPanel.setCaretPosition(recordPanel.getText().length());
-		recordPanel.setLineWrap(true); // ¼¤»î×Ô¶¯»»ÐÐ¹¦ÄÜ
-		recordPanel.setWrapStyleWord(true);
-		recordPanel.setEditable(false);
-		DefaultCaret caret = (DefaultCaret) recordPanel.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        recordPanel = new JTextArea();
+        scrollPane.setViewportView(recordPanel);
+        recordPanel.setText(record);
+        recordPanel.setCaretPosition(recordPanel.getText().length());
+        recordPanel.setLineWrap(true); // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½
+        recordPanel.setWrapStyleWord(true);
+        recordPanel.setEditable(false);
+        DefaultCaret caret = (DefaultCaret) recordPanel.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(null);
-		panel_2.setBounds(0, 370, 701, 141);
-		panel_2.setBackground(Color.WHITE);
-		add(panel_2);
-		panel_2.setLayout(null);
+        JPanel panel_2 = new JPanel();
+        panel_2.setBorder(null);
+        panel_2.setBounds(0, 370, 701, 141);
+        panel_2.setBackground(Color.WHITE);
+        add(panel_2);
+        panel_2.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("\u53D1\u9001");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(646, 111, 30, 15);
-		panel_2.add(lblNewLabel);
+        JLabel lblNewLabel = new JLabel("\u53D1\u9001");
+        lblNewLabel.setForeground(Color.WHITE);
+        lblNewLabel.setBounds(646, 111, 30, 15);
+        panel_2.add(lblNewLabel);
 
-		textField = new JTextArea();
-		textField.setBounds(0, 0, 701, 101);
-		textField.setBorder(null);
-		textField.setLineWrap(true); // ¼¤»î×Ô¶¯»»ÐÐ¹¦ÄÜ
-		textField.setWrapStyleWord(true);
+        textField = new JTextArea();
+        textField.setBounds(0, 0, 701, 101);
+        textField.setBorder(null);
+        textField.setLineWrap(true); // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½
+        textField.setWrapStyleWord(true);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_1.setBounds(0, 0, 701, 101);
-		scrollPane_1.setViewportView(textField);
-		scrollPane_1.setBorder(null);
-		panel_2.add(scrollPane_1);
+        JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane_1.setBounds(0, 0, 701, 101);
+        scrollPane_1.setViewportView(textField);
+        scrollPane_1.setBorder(null);
+        panel_2.add(scrollPane_1);
 
-		JButton button = new JButton("");
+        JButton button = new JButton("");
 
-		button.setIcon(new ImageIcon(SingleChat.class.getResource("/ggb/s8/ui/\u53D1\u9001\u6309\u94AE.png")));
-		button.setContentAreaFilled(false);
-		button.setBorder(null);
-		button.setBounds(626, 107, 65, 22);
-		panel_2.add(button);
+        button.setIcon(new ImageIcon(SingleChat.class.getResource("/ggb/s8/ui/\u53D1\u9001\u6309\u94AE.png")));
+        button.setContentAreaFilled(false);
+        button.setBorder(null);
+        button.setBounds(626, 107, 65, 22);
+        panel_2.add(button);
 
-		recordPanel.setCaretPosition(recordPanel.getText().length());
+        recordPanel.setCaretPosition(recordPanel.getText().length());
 
-		try {
-			// ´´½¨Ò»¸öÌ×½Ó×Ö
-			socket = new Socket("127.0.0.1", 28888);
-			// ´´½¨Ò»¸öÍùÌ×½Ó×ÖÖÐÐ´Êý¾ÝµÄ¹ÜµÀ£¬¼´Êä³öÁ÷£¬¸ø·þÎñÆ÷·¢ËÍÐÅÏ¢
-			pWriter = new PrintWriter(socket.getOutputStream());
-			// ´´½¨Ò»¸ö´ÓÌ×½Ó×Ö¶ÁÊý¾ÝµÄ¹ÜµÀ£¬¼´ÊäÈëÁ÷£¬¶Á·þÎñÆ÷µÄ·µ»ØÐÅÏ¢
-			bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½
+            socket = new Socket("127.0.0.1", 28888);
+            // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ÝµÄ¹Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+            pWriter = new PrintWriter(socket.getOutputStream());
+            // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ÝµÄ¹Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+            bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String strName = Client.curruser.name;
-				String strMsg = textField.getText();
-				if (!strMsg.equals("")) {
-					// Í¨¹ýÊä³öÁ÷½«Êý¾Ý·¢ËÍ¸ø·þÎñÆ÷
-					UserBLL.AddRecord(strMsg);
-					pWriter.println(strName + " Ëµ£º" + strMsg);
-					pWriter.flush();
-					// Çå¿ÕÎÄ±¾¿ò
-					textField.setText("");
-					updateRecord(user);
-				}
-			}
-		});
-		// Æô¶¯Ïß³Ì
-		new GetMsgFromServer().start();
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                String strName = Client.curruser.name;
+                String strMsg = textField.getText();
+                if (!strMsg.equals("")) {
+                    // Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý·ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                    UserBLL.AddRecord(strMsg);
+                    pWriter.println(strName + " Ëµï¿½ï¿½" + strMsg);
+                    pWriter.flush();
+                    // ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
+                    textField.setText("");
+                    updateRecord(user);
+                }
+            }
+        });
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
+        new GetMsgFromServer().start();
 
-		// ½ÓÊÕ·þÎñÆ÷µÄ·µ»ØÐÅÏ¢µÄÏß³Ì
+        // ï¿½ï¿½ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ß³ï¿½
 
-	}
+    }
 
-	class GetMsgFromServer extends Thread {
-		public void run() {
-			while (this.isAlive()) {
-				try {
-					String strMsg = bReader.readLine();
-					if (strMsg != null) {
-						// ÔÚÎÄ±¾ÓòÖÐÏÔÊ¾ÁÄÌìÐÅÏ¢
-						User user = UserBLL.returnuser(Client.currchat);
-						updateRecord(user);
-					}
-					Thread.sleep(200);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    class GetMsgFromServer extends Thread {
+        public void run() {
+            while (this.isAlive()) {
+                try {
+                    String strMsg = bReader.readLine();
+                    if (strMsg != null) {
+                        // ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+                        User user = UserBLL.returnuser(Client.currchat);
+                        updateRecord(user);
+                    }
+                    Thread.sleep(200);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-	void updateRecord(User user) {
-		String record = UserBLL.singleRecord(user).record;
-		recordPanel.setText(record);
-		recordPanel.setCaretPosition(recordPanel.getText().length());
-		panel.revalidate();
-		panel.repaint();
-		panel.updateUI();
-	}
+    void updateRecord(User user) {
+        String record = UserBLL.singleRecord(user).record;
+        recordPanel.setText(record);
+        recordPanel.setCaretPosition(recordPanel.getText().length());
+        panel.revalidate();
+        panel.repaint();
+        panel.updateUI();
+    }
 }

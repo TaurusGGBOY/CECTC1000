@@ -21,87 +21,87 @@ import ggb.s8.bll.AdminBLL;
 import ggb.s8.model.User;
 
 public class AdminPeo extends JPanel {
-	private JTable table;
-	private String[] columnNames = { "ÐÕÃû", "ID", "×´Ì¬", "×¢²áÊ±¼ä", "×îºóµÇÂ¼", "×îºóµÇ³ö" };
-	DefaultTableModel dtm;
+    private JTable table;
+    private String[] columnNames = {"ï¿½ï¿½ï¿½ï¿½", "ID", "×´Ì¬", "×¢ï¿½ï¿½Ê±ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½Â¼", "ï¿½ï¿½ï¿½Ç³ï¿½"};
+    DefaultTableModel dtm;
 
-	/**
-	 * Create the panel.
-	 */
-	public AdminPeo() {
-		setBorder(null);
-		setBackground(Color.WHITE);
-		setSize(900, 543);
-		setLayout(null);
+    /**
+     * Create the panel.
+     */
+    public AdminPeo() {
+        setBorder(null);
+        setBackground(Color.WHITE);
+        setSize(900, 543);
+        setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(49, 146, 784, 216);
-		add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(49, 146, 784, 216);
+        add(scrollPane);
 
-		table = new JTable();
-		dtm = (DefaultTableModel) table.getModel();// ´´½¨model
-		dtm.setColumnIdentifiers(columnNames);// ´´½¨±íÍ·£¬±íÍ·µÄÀàÐÍ¿ÉÒÔÊÇvector »òÕßObject[]
-		scrollPane.setViewportView(table);
+        table = new JTable();
+        dtm = (DefaultTableModel) table.getModel();// ï¿½ï¿½ï¿½ï¿½model
+        dtm.setColumnIdentifiers(columnNames);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ï¿½ï¿½vector ï¿½ï¿½ï¿½ï¿½Object[]
+        scrollPane.setViewportView(table);
 
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon(AdminPeo.class.getResource("/ggb/s8/ui/\u6309\u94AE.png")));
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int sc = table.getSelectedRow();
-				String id = (String) table.getValueAt(sc, 1);
-				AdminBLL.resetPass(id);
-				JOptionPane.showMessageDialog(null, "ÓÃ»§" + id + " ÃÜÂëÖØÖÃÎª123456£¬³É¹¦", null, JOptionPane.PLAIN_MESSAGE);
+        JButton button = new JButton("");
+        button.setIcon(new ImageIcon(AdminPeo.class.getResource("/ggb/s8/ui/\u6309\u94AE.png")));
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int sc = table.getSelectedRow();
+                String id = (String) table.getValueAt(sc, 1);
+                AdminBLL.resetPass(id);
+                JOptionPane.showMessageDialog(null, "ï¿½Ã»ï¿½" + id + " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª123456ï¿½ï¿½ï¿½É¹ï¿½", null, JOptionPane.PLAIN_MESSAGE);
 
-			}
-		});
+            }
+        });
 
-		JLabel lblNewLabel = new JLabel("\u91CD\u7F6E\u5BC6\u7801");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
-		lblNewLabel.setBounds(270, 406, 64, 28);
-		add(lblNewLabel);
+        JLabel lblNewLabel = new JLabel("\u91CD\u7F6E\u5BC6\u7801");
+        lblNewLabel.setForeground(Color.WHITE);
+        lblNewLabel.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 16));
+        lblNewLabel.setBounds(270, 406, 64, 28);
+        add(lblNewLabel);
 
-		JLabel label = new JLabel("\u5F3A\u5236\u4E0B\u7EBF");
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
-		label.setBounds(540, 406, 64, 28);
-		add(label);
-		button.setContentAreaFilled(false);
-		button.setBorder(null);
-		button.setBounds(205, 406, 195, 31);
-		add(button);
+        JLabel label = new JLabel("\u5F3A\u5236\u4E0B\u7EBF");
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 16));
+        label.setBounds(540, 406, 64, 28);
+        add(label);
+        button.setContentAreaFilled(false);
+        button.setBorder(null);
+        button.setBounds(205, 406, 195, 31);
+        add(button);
 
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int sc = table.getSelectedRow();
-				String id = (String) table.getValueAt(sc, 1);
-				AdminBLL.comOff(id);
-				JOptionPane.showMessageDialog(null, "ÓÃ»§" + id + "Ç¿ÖÆÏÂÏß£¬³É¹¦", null, JOptionPane.PLAIN_MESSAGE);
-				updateTable();
-				table.updateUI();
-			}
-		});
-		button_1.setIcon(new ImageIcon(AdminPeo.class.getResource("/ggb/s8/ui/\u6309\u94AE.png")));
-		button_1.setContentAreaFilled(false);
-		button_1.setBorder(null);
-		button_1.setBounds(474, 406, 195, 31);
-		add(button_1);
-		updateTable();
-	}
+        JButton button_1 = new JButton("");
+        button_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                int sc = table.getSelectedRow();
+                String id = (String) table.getValueAt(sc, 1);
+                AdminBLL.comOff(id);
+                JOptionPane.showMessageDialog(null, "ï¿½Ã»ï¿½" + id + "Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½É¹ï¿½", null, JOptionPane.PLAIN_MESSAGE);
+                updateTable();
+                table.updateUI();
+            }
+        });
+        button_1.setIcon(new ImageIcon(AdminPeo.class.getResource("/ggb/s8/ui/\u6309\u94AE.png")));
+        button_1.setContentAreaFilled(false);
+        button_1.setBorder(null);
+        button_1.setBounds(474, 406, 195, 31);
+        add(button_1);
+        updateTable();
+    }
 
-	void updateTable() {
-		ArrayList<User> userlist = AdminBLL.returnAllUser();
-		dtm.setRowCount(0);
-		for (User user : userlist) {
-			Vector<String> v1 = new Vector<String>();
-			v1.add(user.name);
-			v1.add(user.id);
-			v1.add(user.state);
-			v1.add(new SimpleDateFormat("yyyy-MM-dd").format(user.registertime));
-			v1.add(new SimpleDateFormat("yyyy-MM-dd").format(user.lastlogin));
-			v1.add(new SimpleDateFormat("yyyy-MM-dd").format(user.lastlogout));
-			dtm.addRow(v1);
-		}
-	}
+    void updateTable() {
+        ArrayList<User> userlist = AdminBLL.returnAllUser();
+        dtm.setRowCount(0);
+        for (User user : userlist) {
+            Vector<String> v1 = new Vector<String>();
+            v1.add(user.name);
+            v1.add(user.id);
+            v1.add(user.state);
+            v1.add(new SimpleDateFormat("yyyy-MM-dd").format(user.registertime));
+            v1.add(new SimpleDateFormat("yyyy-MM-dd").format(user.lastlogin));
+            v1.add(new SimpleDateFormat("yyyy-MM-dd").format(user.lastlogout));
+            dtm.addRow(v1);
+        }
+    }
 }

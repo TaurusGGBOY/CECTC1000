@@ -18,192 +18,185 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * 
- * @ÏîÄ¿Ãû³Æ£ºJavaSQL1
- * @ÀàÃû³Æ£ºMySQLHelper
- * @ÀàÃèÊö£ºmysql²Ù×÷Àà
- * @´´½¨ÈË£º±¼ÅÜµÄ¼¦Ë¿ @´´½¨Ê±¼ä£º2014-11-25 ÏÂÎç8:58:34 @ÐÞ¸Ä±¸×¢£º @°æ±¾£º
+ * @ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Æ£ï¿½JavaSQL1
+ * @ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½MySQLHelper
+ * @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mysqlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ÜµÄ¼ï¿½Ë¿ @ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014-11-25 ï¿½ï¿½ï¿½ï¿½8:58:34 @ï¿½Þ¸Ä±ï¿½×¢ï¿½ï¿½ @ï¿½æ±¾ï¿½ï¿½
  */
 public class MySQLHelper {
-	private static final String PROPERTIES_NAME = "D:\\eclipse\\workspace\\P2016112462¸ß¹ú±òS8\\src\\ggb\\s8\\dal\\config.properties";
-	public static String url = "jdbc:mysql://127.0.0.1/qq"; // Êý¾Ý¿âÁ¬½Ó
-	public static String name = "com.mysql.cj.jdbc.Driver"; // ³ÌÐòÇý¶¯
-	public static String user = "root"; // ÓÃ»§Ãû
-	public static String password = "123456"; // ÃÜÂë
-	public static String recordpassword = "";
-	public static String autologin = "";
-	public static String auto_id = "";
-	public static String auto_password = "";
-	public static Connection connection = null; // Êý¾Ý¿âÁ¬½Ó
-	public static PreparedStatement preparedStatement = null; // ´ý²éÑ¯Óï¾äÃèÊö¶ÔÏó
-	public static boolean isOpen = false;
+    private static final String PROPERTIES_NAME = "D:\\eclipse\\workspace\\P2016112462ï¿½ß¹ï¿½ï¿½ï¿½S8\\src\\ggb\\s8\\dal\\config.properties";
+    public static String url = "jdbc:mysql://127.0.0.1/qq"; // ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static String name = "com.mysql.cj.jdbc.Driver"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static String user = "root"; // ï¿½Ã»ï¿½ï¿½ï¿½
+    public static String password = "123456"; // ï¿½ï¿½ï¿½ï¿½
+    public static String recordpassword = "";
+    public static String autologin = "";
+    public static String auto_id = "";
+    public static String auto_password = "";
+    public static Connection connection = null; // ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static PreparedStatement preparedStatement = null; // ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static boolean isOpen = false;
 
-	/**
-	 * 
-	 * ´´½¨Ò»¸öÐÂµÄÊµÀý DBHelper.
-	 * 
-	 * @param sql
-	 *            : SQL²éÑ¯Óï¾ä
-	 */
-	public MySQLHelper() {
-		try {
-			Properties properties = new Properties();
-			properties.load(new InputStreamReader(new FileInputStream(PROPERTIES_NAME), "UTF-8"));
-			url = "jdbc:mysql://" + properties.getProperty("host")
-					+ "?characterEncoding=GBK&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-			user = properties.getProperty("user");
-			password = properties.getProperty("password");
-			recordpassword = properties.getProperty("recordpassword");
-			auto_id = properties.getProperty("auto_id");
-			auto_password = properties.getProperty("auto_password");
-			autologin = properties.getProperty("autologin");
+    /**
+     * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Âµï¿½Êµï¿½ï¿½ DBHelper.
+     *
+     * @param sql : SQLï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½
+     */
+    public MySQLHelper() {
+        try {
+            Properties properties = new Properties();
+            properties.load(new InputStreamReader(new FileInputStream(PROPERTIES_NAME), "UTF-8"));
+            url = "jdbc:mysql://" + properties.getProperty("host")
+                    + "?characterEncoding=GBK&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+            user = properties.getProperty("user");
+            password = properties.getProperty("password");
+            recordpassword = properties.getProperty("recordpassword");
+            auto_id = properties.getProperty("auto_id");
+            auto_password = properties.getProperty("auto_password");
+            autologin = properties.getProperty("autologin");
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	public void connection() {
-		try {
-			if (!isOpen) {
-				Class.forName(name);// Ö¸¶¨Á¬½ÓÀàÐÍ
-				connection = DriverManager.getConnection(url, user, password);// »ñÈ¡Á¬½Ó
-				isOpen = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+    public void connection() {
+        try {
+            if (!isOpen) {
+                Class.forName(name);// Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                connection = DriverManager.getConnection(url, user, password);// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+                isOpen = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
 
-		}
-	}
+        }
+    }
 
-	/**
-	 * 
-	 * @·½·¨Ãû³Æ: close £» @·½·¨ÃèÊö: ¹Ø±ÕÊý¾Ý¿â £» @²ÎÊý £º @·µ»ØÀàÐÍ: void £» @´´½¨ÈË£º±¼ÅÜµÄ¼¦Ë¿
-	 *        ; @´´½¨Ê±¼ä£º2014-11-25 ÏÂÎç8:58:14£» @throws
-	 */
-	public void close() {
+    /**
+     * @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: close ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: void ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ÜµÄ¼ï¿½Ë¿
+     * ; @ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014-11-25 ï¿½ï¿½ï¿½ï¿½8:58:14ï¿½ï¿½ @throws
+     */
+    public void close() {
 
-		try {
-			if (connection != null)
-				if (!connection.isClosed()) {
-					connection.close();
-					preparedStatement.close();
-					connection = null;
-					isOpen = false;
-				}
-		} catch (SQLException e) {
-			System.out.println("¹Ø±ÕÊý¾Ý¿â³öÏÖÎÊÌâ£¡£¡");
-			e.printStackTrace();
-		}
-	}
+        try {
+            if (connection != null)
+                if (!connection.isClosed()) {
+                    connection.close();
+                    preparedStatement.close();
+                    connection = null;
+                    isOpen = false;
+                }
+        } catch (SQLException e) {
+            System.out.println("ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¡ï¿½ï¿½");
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * 
-	 * @·½·¨Ãû³Æ: query £» @·½·¨ÃèÊö: ²éÑ¯²Ù×÷ £» @²ÎÊý £º@param sql£º²éÑ¯²Ù×÷Óï¾ä £» @·µ»ØÀàÐÍ: ResultSet
-	 *        :²éÑ¯½á¹ûÊý¾Ý¼¯£» @´´½¨ÈË£º±¼ÅÜµÄ¼¦Ë¿ ; @´´½¨Ê±¼ä£º2014-11-25 ÏÂÎç8:49:25£» @throws
-	 */
-	public List<Map<String, Object>> query(String sql) {
-		connection();
-		ResultSet resultSet = null;
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		try {
-			preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY,
-					ResultSet.CONCUR_READ_ONLY); // ×¼±¸Ö´ÐÐÓï¾ä
-			resultSet = preparedStatement.executeQuery();
+    /**
+     * @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: query ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½@param sqlï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ResultSet
+     * :ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ÜµÄ¼ï¿½Ë¿ ; @ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014-11-25 ï¿½ï¿½ï¿½ï¿½8:49:25ï¿½ï¿½ @throws
+     */
+    public List<Map<String, Object>> query(String sql) {
+        connection();
+        ResultSet resultSet = null;
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY,
+                    ResultSet.CONCUR_READ_ONLY); // ×¼ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½
+            resultSet = preparedStatement.executeQuery();
 
-			// return the description of this ResultSet object's columns
-			ResultSetMetaData rsMetaData = resultSet.getMetaData();
-			// return the number of columns
-			int columnCount = rsMetaData.getColumnCount();
-			String columnName = "";
-			while (resultSet.next()) {
-				Map<String, Object> rowData = new HashMap<String, Object>();
-				for (int i = 1; i <= columnCount; i++) {
-					// return µÚiÁÐµÄcolumn name
-					columnName = rsMetaData.getColumnName(i);
-					rowData.put(columnName, resultSet.getObject(i));
-				}
-				list.add(rowData);
-			}
+            // return the description of this ResultSet object's columns
+            ResultSetMetaData rsMetaData = resultSet.getMetaData();
+            // return the number of columns
+            int columnCount = rsMetaData.getColumnCount();
+            String columnName = "";
+            while (resultSet.next()) {
+                Map<String, Object> rowData = new HashMap<String, Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    // return ï¿½ï¿½iï¿½Ðµï¿½column name
+                    columnName = rsMetaData.getColumnName(i);
+                    rowData.put(columnName, resultSet.getObject(i));
+                }
+                list.add(rowData);
+            }
 
-		} catch (Exception e) {
-			System.out.println("²éÑ¯´íÎó£¬Çë¼ì²é£¡£¡");
-			e.printStackTrace();
-		}
-		close();
-		return list;
-	}
+        } catch (Exception e) {
+            System.out.println("ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¡ï¿½ï¿½");
+            e.printStackTrace();
+        }
+        close();
+        return list;
+    }
 
-	/**
-	 * 
-	 * @·½·¨Ãû³Æ: executeNonquery £» @·½·¨ÃèÊö: ²åÈë¡¢ÐÞ¸Ä¡¢É¾³ýµÈ²Ù×÷ £» @²ÎÊý £º@param sql£º²åÈëÓï¾ä @·µ»ØÀàÐÍ:
-	 *        boolean £» @´´½¨ÈË£º±¼ÅÜµÄ¼¦Ë¿£» @´´½¨Ê±¼ä£º2014-11-25 ÏÂÎç8:45:49£» @throws
-	 */
-	public boolean executeNonquery(String sql) {
-		connection();
-		boolean flag = false;
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.executeUpdate();
-			flag = true;
+    /**
+     * @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: executeNonquery ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ë¡¢ï¿½Þ¸Ä¡ï¿½É¾ï¿½ï¿½ï¿½È²ï¿½ï¿½ï¿½ ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½@param sqlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:
+     * boolean ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ÜµÄ¼ï¿½Ë¿ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014-11-25 ï¿½ï¿½ï¿½ï¿½8:45:49ï¿½ï¿½ @throws
+     */
+    public boolean executeNonquery(String sql) {
+        connection();
+        boolean flag = false;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            flag = true;
 
-		} catch (Exception e) {
-			System.out.println("²åÈëÊý¾Ý¿âÊ±³öÏÖ´íÎó£¡£¡");
-			e.printStackTrace();
-		}
-		close();
-		return flag;
-	}
+        } catch (Exception e) {
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½Ê±ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ó£¡£ï¿½");
+            e.printStackTrace();
+        }
+        close();
+        return flag;
+    }
 
-	/**
-	 * 
-	 * @·½·¨Ãû³Æ: getCount £» @·½·¨ÃèÊö: »ñÈ¡±í¼ÇÂ¼Êý £» @²ÎÊý £º@param sql @²ÎÊý £º@return @·µ»ØÀàÐÍ: int
-	 *        ¼ÇÂ¼Êý£» @´´½¨ÈË£º±¼ÅÜµÄ¼¦Ë¿ ; @´´½¨Ê±¼ä£º2014-11-26 ÏÂÎç2:40:37£» @throws
-	 */
-	public int getCount(String sql) {
-		connection();
-		int count = 0;
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			resultSet.last();
-			count = resultSet.getRow();
-			resultSet.close();
+    /**
+     * @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: getCount ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½È¡ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½@param sql @ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½@return @ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: int
+     * ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ @ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ÜµÄ¼ï¿½Ë¿ ; @ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014-11-26 ï¿½ï¿½ï¿½ï¿½2:40:37ï¿½ï¿½ @throws
+     */
+    public int getCount(String sql) {
+        connection();
+        int count = 0;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.last();
+            count = resultSet.getRow();
+            resultSet.close();
 
-		} catch (Exception e) {
-			System.out.println("²éÑ¯×Ü¼ÇÂ¼ÊýÊ§°Ü£¡£¡");
-			e.printStackTrace();
-		}
-		close();
-		return count;
-	}
+        } catch (Exception e) {
+            System.out.println("ï¿½ï¿½Ñ¯ï¿½Ü¼ï¿½Â¼ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½");
+            e.printStackTrace();
+        }
+        close();
+        return count;
+    }
 
-	public void setProperty(String string, String value) {
-		Properties properties = new Properties();
-		try {
-			properties.load(new InputStreamReader(new FileInputStream(PROPERTIES_NAME), "UTF-8"));
-			OutputStream fos = new FileOutputStream(PROPERTIES_NAME);
-			properties.setProperty(string, value);
-			properties.store(fos, "Update value");
-			fos.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void setProperty(String string, String value) {
+        Properties properties = new Properties();
+        try {
+            properties.load(new InputStreamReader(new FileInputStream(PROPERTIES_NAME), "UTF-8"));
+            OutputStream fos = new FileOutputStream(PROPERTIES_NAME);
+            properties.setProperty(string, value);
+            properties.store(fos, "Update value");
+            fos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	public String getProperty(String string) {
-		Properties properties = new Properties();
-		try {
-			properties.load(new InputStreamReader(new FileInputStream(PROPERTIES_NAME), "UTF-8"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String rsString = properties.getProperty(string);
-		return rsString;
-	}
+    public String getProperty(String string) {
+        Properties properties = new Properties();
+        try {
+            properties.load(new InputStreamReader(new FileInputStream(PROPERTIES_NAME), "UTF-8"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String rsString = properties.getProperty(string);
+        return rsString;
+    }
 }

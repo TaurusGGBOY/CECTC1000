@@ -11,109 +11,109 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
-//ÁÄÌìÊÒ·þÎñÆ÷¶Ë
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public class ChatServer {
-	// ÉùÃ÷·þÎñÆ÷¶ËÌ×½Ó×ÖServerSocket
-	ServerSocket serverSocket;
-	// ÊäÈëÁ÷ÁÐ±í¼¯ºÏ
-	ArrayList<BufferedReader> bReaders = new ArrayList<BufferedReader>();
-	// Êä³öÁ÷ÁÐ±í¼¯ºÏ
-	ArrayList<PrintWriter> pWriters = new ArrayList<PrintWriter>();
-	// ÁÄÌìÐÅÏ¢Á´±í¼¯ºÏ
-	LinkedList<String> msgList = new LinkedList<String>();
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½ServerSocket
+    ServerSocket serverSocket;
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½
+    ArrayList<BufferedReader> bReaders = new ArrayList<BufferedReader>();
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½
+    ArrayList<PrintWriter> pWriters = new ArrayList<PrintWriter>();
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    LinkedList<String> msgList = new LinkedList<String>();
 
-	public ChatServer() {
-		try {
-			// ´´½¨·þÎñÆ÷¶ËÌ×½Ó×ÖServerSocket£¬ÔÚ28888¶Ë¿Ú¼àÌý
-			serverSocket = new ServerSocket(28888);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		// ´´½¨½ÓÊÕ¿Í»§¶ËSocketµÄÏß³ÌÊµÀý£¬²¢Æô¶¯
-		new AcceptSocketThread().start();
-		// ´´½¨¸ø¿Í»§¶Ë·¢ËÍÐÅÏ¢µÄÏß³ÌÊµÀý£¬²¢Æô¶¯
-		new SendMsgToClient().start();
-		System.out.println("·þÎñÆ÷ÒÑÆô¶¯...");
-	}
+    public ChatServer() {
+        try {
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½ServerSocketï¿½ï¿½ï¿½ï¿½28888ï¿½Ë¿Ú¼ï¿½ï¿½ï¿½
+            serverSocket = new ServerSocket(28888);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¿Í»ï¿½ï¿½ï¿½Socketï¿½ï¿½ï¿½ß³ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        new AcceptSocketThread().start();
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ß³ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        new SendMsgToClient().start();
+        System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...");
+    }
 
-	// ½ÓÊÕ¿Í»§¶ËSocketÌ×½Ó×ÖÏß³Ì
-	class AcceptSocketThread extends Thread {
-		public void run() {
-			while (this.isAlive()) {
-				try {
-					// ½ÓÊÕÒ»¸ö¿Í»§¶ËSocket¶ÔÏó
-					Socket socket = serverSocket.accept();
-					// ½¨Á¢¸Ã¿Í»§¶ËµÄÍ¨ÐÅ¹ÜµÀ
-					if (socket != null) {
-						// »ñÈ¡Socket¶ÔÏóµÄÊäÈëÁ÷
-						BufferedReader bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-						// ½«ÊäÈëÁ÷Ìí¼Óµ½ÊäÈëÁ÷ÁÐ±í¼¯ºÏÖÐ
-						bReaders.add(bReader);
-						// ¿ªÆôÒ»¸öÏß³Ì½ÓÊÕ¸Ã¿Í»§¶ËµÄÁÄÌìÐÅÏ¢
-						new GetMsgFromClient(bReader).start();
+    // ï¿½ï¿½ï¿½Õ¿Í»ï¿½ï¿½ï¿½Socketï¿½×½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
+    class AcceptSocketThread extends Thread {
+        public void run() {
+            while (this.isAlive()) {
+                try {
+                    // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½Socketï¿½ï¿½ï¿½ï¿½
+                    Socket socket = serverSocket.accept();
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿Í»ï¿½ï¿½Ëµï¿½Í¨ï¿½Å¹Üµï¿½
+                    if (socket != null) {
+                        // ï¿½ï¿½È¡Socketï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        BufferedReader bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½
+                        bReaders.add(bReader);
+                        // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ß³Ì½ï¿½ï¿½Õ¸Ã¿Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+                        new GetMsgFromClient(bReader).start();
 
-						// »ñÈ¡Socket¶ÔÏóµÄÊä³öÁ÷£¬²¢Ìí¼Óµ½ÊäÈë³öÁ÷ÁÐ±í¼¯ºÏÖÐ
-						pWriters.add(new PrintWriter(socket.getOutputStream()));
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+                        // ï¿½ï¿½È¡Socketï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½
+                        pWriters.add(new PrintWriter(socket.getOutputStream()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	// ½ÓÊÕ¿Í»§¶ËµÄÁÄÌìÐÅÏ¢µÄÏß³Ì
-	class GetMsgFromClient extends Thread {
-		BufferedReader bReader;
+    // ï¿½ï¿½ï¿½Õ¿Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ß³ï¿½
+    class GetMsgFromClient extends Thread {
+        BufferedReader bReader;
 
-		public GetMsgFromClient(BufferedReader bReader) {
-			this.bReader = bReader;
-		}
+        public GetMsgFromClient(BufferedReader bReader) {
+            this.bReader = bReader;
+        }
 
-		public void run() {
-			while (this.isAlive()) {
-				try {
-					// ´ÓÊäÈëÁ÷ÖÐ¶ÁÒ»ÐÐÐÅÏ¢
-					String strMsg = bReader.readLine();
-					if (strMsg != null) {
-						// SimpleDateFormatÈÕÆÚ¸ñÊ½»¯Àà£¬Ö¸¶¨ÈÕÆÚ¸ñÊ½Îª"Äê-ÔÂ-ÈÕ Ê±:·Ö:Ãë",ÀýÈç"2015-11-06 13:50:26"
-						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						// »ñÈ¡µ±Ç°ÏµÍ³Ê±¼ä£¬²¢Ê¹ÓÃÈÕÆÚ¸ñÊ½»¯Àà¸ñÊ½»¯ÎªÖ¸¶¨¸ñÊ½µÄ×Ö·û´®
-						String strTime = dateFormat.format(new Date());
-						// ½«Ê±¼äºÍÐÅÏ¢Ìí¼Óµ½ÐÅÏ¢Á´±í¼¯ºÏÖÐ
-						msgList.addFirst("<== " + strTime + " ==>\n" + strMsg);
-					}
-				} catch (Exception e) {
-					// e.printStackTrace();
-				}
-			}
-		}
-	}
+        public void run() {
+            while (this.isAlive()) {
+                try {
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ï¢
+                    String strMsg = bReader.readLine();
+                    if (strMsg != null) {
+                        // SimpleDateFormatï¿½ï¿½ï¿½Ú¸ï¿½Ê½ï¿½ï¿½ï¿½à£¬Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½Ê½Îª"ï¿½ï¿½-ï¿½ï¿½-ï¿½ï¿½ Ê±:ï¿½ï¿½:ï¿½ï¿½",ï¿½ï¿½ï¿½ï¿½"2015-11-06 13:50:26"
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        // ï¿½ï¿½È¡ï¿½ï¿½Ç°ÏµÍ³Ê±ï¿½ä£¬ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ÎªÖ¸ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+                        String strTime = dateFormat.format(new Date());
+                        // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Óµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        msgList.addFirst("<== " + strTime + " ==>\n" + strMsg);
+                    }
+                } catch (Exception e) {
+                    // e.printStackTrace();
+                }
+            }
+        }
+    }
 
-	// ¸øËùÓÐ¿Í»§·¢ËÍÁÄÌìÐÅÏ¢µÄÏß³Ì
-	class SendMsgToClient extends Thread {
-		public void run() {
-			while (this.isAlive()) {
-				try {
-					// Èç¹ûÐÅÏ¢Á´±í¼¯ºÏ²»¿Õ£¨»¹ÓÐÁÄÌìÐÅÏ¢Î´·¢ËÍ£©
-					if (!msgList.isEmpty()) {
-						// È¡ÐÅÏ¢Á´±í¼¯ºÏÖÐµÄ×îºóÒ»Ìõ,²¢ÒÆ³ý
-						String msg = msgList.removeLast();
-						// ¶ÔÊä³öÁ÷ÁÐ±í¼¯ºÏ½øÐÐ±éÀú£¬Ñ­»··¢ËÍÐÅÏ¢¸øËùÓÐ¿Í»§¶Ë
-						for (int i = 0; i < pWriters.size(); i++) {
-							pWriters.get(i).println(msg);
-							pWriters.get(i).flush();
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ß³ï¿½
+    class SendMsgToClient extends Thread {
+        public void run() {
+            while (this.isAlive()) {
+                try {
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Î´ï¿½ï¿½ï¿½Í£ï¿½
+                    if (!msgList.isEmpty()) {
+                        // È¡ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½,ï¿½ï¿½ï¿½Æ³ï¿½
+                        String msg = msgList.removeLast();
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½Ï½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿Í»ï¿½ï¿½ï¿½
+                        for (int i = 0; i < pWriters.size(); i++) {
+                            pWriters.get(i).println(msg);
+                            pWriters.get(i).flush();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-	public static void main(String args[]) {
-		new ChatServer();
-	}
+    public static void main(String args[]) {
+        new ChatServer();
+    }
 }

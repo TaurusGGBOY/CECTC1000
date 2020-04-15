@@ -4,24 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminDAL {
-	static public List<Map<String, Object>> returnAllOL() {
-		return new MySQLHelper().query("SELECT * FROM qquser where state = 'ÔÚÏß'");
-	}
+    static public List<Map<String, Object>> returnAllOL() {
+        return new MySQLHelper().query("SELECT * FROM qquser where state = 'ï¿½ï¿½ï¿½ï¿½'");
+    }
 
-	static public List<Map<String, Object>> returnAllRegister() {
-		return new MySQLHelper().query("SELECT * FROM qquser");
-	}
+    static public List<Map<String, Object>> returnAllRegister() {
+        return new MySQLHelper().query("SELECT * FROM qquser");
+    }
 
-	static public List<Map<String, Object>> returnAllGroup() {
-		return new MySQLHelper().query("SELECT * FROM qqgroup");
-	}
+    static public List<Map<String, Object>> returnAllGroup() {
+        return new MySQLHelper().query("SELECT * FROM qqgroup");
+    }
 
-	static public void resetPass(String id) {
-		new MySQLHelper().executeNonquery("Update qquser SET password='12345' WHERE id='" + id + "'");
-	}
+    static public void resetPass(String id) {
+        new MySQLHelper().executeNonquery("Update qquser SET password='12345' WHERE id='" + id + "'");
+    }
 
-	static public void comOff(String id) {
-		new MySQLHelper().executeNonquery("Update qquser SET state='ÀëÏß' WHERE id='" + id + "'");
-	}
+    static public void comOff(String id) {
+        new MySQLHelper().executeNonquery("Update qquser SET state='ï¿½ï¿½ï¿½ï¿½' WHERE id='" + id + "'");
+    }
 
 }

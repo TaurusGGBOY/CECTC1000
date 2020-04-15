@@ -9,32 +9,32 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 public class AdminServer extends JPanel {
-	public boolean serverswitch = true;
+    public boolean serverswitch = true;
 
-	/**
-	 * Create the panel.
-	 */
-	public AdminServer() {
-		setBorder(null);
-		setBackground(Color.WHITE);
-		setSize(900, 543);
-		setLayout(null);
+    /**
+     * Create the panel.
+     */
+    public AdminServer() {
+        setBorder(null);
+        setBackground(Color.WHITE);
+        setSize(900, 543);
+        setLayout(null);
 
-		JToggleButton toggleButton = new JToggleButton("\u670D\u52A1\u5668:\u5F00");
-		toggleButton.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 20));
-		toggleButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				serverswitch = !serverswitch;
-				if (serverswitch) {
-					toggleButton.setText("·þÎñÆ÷:¿ª");
-				} else {
-					toggleButton.setText("·þÎñÆ÷:¹Ø");
-					System.exit(0);
-				}
-			}
-		});
-		toggleButton.setForeground(new Color(0, 0, 255));
-		toggleButton.setBounds(380, 20, 187, 67);
-		add(toggleButton);
-	}
+        JToggleButton toggleButton = new JToggleButton("\u670D\u52A1\u5668:\u5F00");
+        toggleButton.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.BOLD, 20));
+        toggleButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                serverswitch = !serverswitch;
+                if (serverswitch) {
+                    toggleButton.setText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½");
+                } else {
+                    toggleButton.setText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½");
+                    System.exit(0);
+                }
+            }
+        });
+        toggleButton.setForeground(new Color(0, 0, 255));
+        toggleButton.setBounds(380, 20, 187, 67);
+        add(toggleButton);
+    }
 }
